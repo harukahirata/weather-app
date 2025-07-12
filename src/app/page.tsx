@@ -13,6 +13,7 @@ const Home = () => {
     setCity,
     weather,
     error,
+    loading,
     fetchWeather,
     fetchWeatherByLocation,
   } = useWeather();
@@ -32,6 +33,7 @@ const Home = () => {
         error={error}
       />
       <CurrentLocationButton onClick={fetchWeatherByLocation} />
+      {loading && <p>読み込み中</p>}
       {weather && <WeatherDisplay weather={weather} />}
     </main>
   );

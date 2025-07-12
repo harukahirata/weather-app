@@ -3,7 +3,8 @@ import { WeatherData } from "../types/weather";
 
 export const useWeatherFetch = (
   setWeather: (data: WeatherData | null) => void,
-  setError: (msg: string) => void
+  setError: (msg: string) => void,
+  setLoading: (loading: boolean) => void
 ) => {
   return useCallback(
     async (city: string) => {
@@ -12,6 +13,7 @@ export const useWeatherFetch = (
 
       setError("");
       setWeather(null);
+      setLoading(true);
 
       try {
         // Geocoding APIで緯度経度を取得
@@ -50,8 +52,10 @@ export const useWeatherFetch = (
         } else {
           setError("エラーが発生しました");
         }
+      } finally {
+        setLoading(false);
       }
     },
-    [setWeather, setError]
+    [setWeather, setError, setLoading]
   );
 };
