@@ -3,14 +3,17 @@ import { WeatherData } from "../types/weather";
 
 export const useWeatherByLocation = (
   setWeather: (data: WeatherData | null) => void,
-  setError: (msg: string) => void
+  setError: (msg: string) => void,
+  setLoading: (loading: boolean) => void
 ) => {
   return useCallback(() => {
     setError("");
     setWeather(null);
+    setLoading(true);
 
     if (!navigator.geolocation) {
       setError("位置情報が取得できません");
+      setLoading(false);
       return;
     }
 
@@ -33,7 +36,9 @@ export const useWeatherByLocation = (
         } else {
           setError("エラーが発生しました");
         }
+      } finally {
+        setLoading(false);
       }
     });
-  }, [setWeather, setError]);
+  }, [setWeather, setError, setLoading]);
 };
