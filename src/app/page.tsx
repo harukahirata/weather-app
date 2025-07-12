@@ -26,6 +26,11 @@ const Home = () => {
     fetchWeatherByLocation();
   }, []);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchWeather();
+  };
+
   const fetchWeather = async () => {
     const trimmedCity = city.trim();
     if (!trimmedCity) return;
@@ -111,16 +116,18 @@ const Home = () => {
       <h1>天気予報アプリ</h1>
 
       <div>
-        <input
-          type="text"
-          placeholder="地名を入力(例:東京)"
-          value={city}
-          onChange={(e) => setCity(e.currentTarget.value)}
-          style={{ padding: 8, marginRight: 8 }}
-        />
-        <button onClick={fetchWeather} style={{ padding: 8 }}>
-          検索
-        </button>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="地名を入力(例:東京)"
+            value={city}
+            onChange={(e) => setCity(e.currentTarget.value)}
+            style={{ padding: 8, marginRight: 8 }}
+          />
+          <button onClick={fetchWeather} style={{ padding: 8 }} type="submit">
+            検索
+          </button>
+        </form>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
       <button onClick={fetchWeatherByLocation}>現在地で調べる</button>
