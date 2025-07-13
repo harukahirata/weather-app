@@ -1,7 +1,10 @@
+import CityInput from "./CityInput";
+
 type Props = {
   city: string;
   onCityChange: (value: string) => void;
   onSearch: (city: string) => void;
+
   error: string;
 };
 
@@ -14,12 +17,10 @@ const WeatherForm = ({ city, onCityChange, onSearch, error }: Props) => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="東京,大阪,福岡"
-          value={city}
-          onChange={(e) => onCityChange(e.currentTarget.value)}
-          style={{ padding: 8, marginRight: 8 }}
+        <CityInput
+          city={city}
+          onCityChange={onCityChange}
+          onSelect={onSearch}
         />
         <button
           onClick={() => onSearch(city)}
